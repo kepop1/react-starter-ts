@@ -1,0 +1,24 @@
+/*  Arbitrary font family */
+$openSansRegular: OpenSans-Regular;
+$openSansItalic: OpenSans-Italic;
+$openSansBold: OpenSans-Bold;
+
+/* Arbitrary font sizing */
+$heading: 2.2rem;
+$subHeading: 1.8rem;
+$body: 1.6rem;
+$navigationHeader: 2.4rem;
+$button: 1.8rem;
+$small: 1.4rem;
+
+:export {
+  openSansRegular: $openSansRegular;
+  openSansItalic: $openSansItalic;
+  openSansBold: $openSansBold;
+  heading: $heading;
+  subHeading: $subHeading;
+  body: $body;
+  navigationHeader: $navigationHeader;
+  button: $button;
+  small: $small;
+}

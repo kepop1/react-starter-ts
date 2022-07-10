@@ -1,0 +1,26 @@
+@use 'src/lib/Font' as font;
+@use 'src/lib/Spacing' as spacing;
+@use 'src/lib/Colors' as colors;
+
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0 spacing.$medium;
+}
+
+.header {
+  font-family: font.$openSansBold;
+  font-size: font.$heading;
+  text-align: center;
+  letter-spacing: 1rem;
+  margin: xl 0;
+}
+
+.text {
+  font-family: font.$openSansRegular;
+  font-size: font.$body;
+  padding: calc(spacing.$medium * 3);
+  text-align: center;
+  line-height: 2.2rem;
+}

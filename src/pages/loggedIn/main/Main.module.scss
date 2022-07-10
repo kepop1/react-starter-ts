@@ -1,0 +1,32 @@
+@use 'src/lib/Font' as font;
+@use 'src/lib/Spacing' as spacing;
+@use 'src/lib/Colors' as colors;
+
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-content: center;
+  margin: spacing.$xlarge;
+  padding: spacing.$medium;
+  background-color: colors.$vividBurgundy;
+  border-radius: spacing.$medium;
+  box-shadow: 3px black;
+}
+
+.text {
+  font-family: font.$openSansBold;
+  font-size: font.$subHeading;
+  margin-top: spacing.$small;
+  text-align: center;
+  color: white;
+}
+
+.italicText {
+  font-family: font.$openSansItalic;
+  font-size: font.$subHeading;
+  margin-top: spacing.$medium;
+  text-align: center;
+  color: colors.$goldCrayola;
+  word-wrap: break-word;
+}

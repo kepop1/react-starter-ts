@@ -1,0 +1,13 @@
+@use 'src/lib/Font' as font;
+@use 'src/lib/Spacing' as spacing;
+
+.button {
+  font-family: font.$openSansBold;
+  font-size: font.$button;
+  color: white;
+  background-color: lime;
+  padding: spacing.$xsmall calc(spacing.$medium * 4);
+  align-self: center;
+  border-radius: spacing.$xlarge;
+  margin-top: spacing.$xlarge;
+}

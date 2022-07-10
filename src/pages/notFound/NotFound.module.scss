@@ -1,0 +1,25 @@
+@use 'src/lib/Font' as font;
+@use 'src/lib/Spacing' as spacing;
+@use 'src/lib/Colors' as colors;
+
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  display: block;
+  font-family: font.$openSansBold;
+  font-size: font.$navigationHeader;
+  color: black;
+  margin-top: spacing.$xlarge;
+}
+
+.body {
+  display: block;
+  font-family: font.$openSansRegular;
+  font-size: font.$body;
+  color: colors.$vividBurgundy;
+}

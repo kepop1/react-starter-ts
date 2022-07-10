@@ -1,0 +1,32 @@
+@use 'src/lib/Font' as font;
+@use 'src/lib/Spacing' as spacing;
+@use 'src/lib/Colors' as colors;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+
+.header {
+  font-family: font.$openSansBold;
+  font-size: font.$heading;
+  text-align: center;
+  margin: calc(spacing.$medium * 3) 0;
+}
+
+.error {
+  font-family: font.$openSansBold;
+  font-size: small;
+  color: colors.$vividBurgundy;
+  padding: spacing.$xsmall;
+  margin: spacing.$xsmall spacing.$xlarge;
+}
+
+.formContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 400px;
+}

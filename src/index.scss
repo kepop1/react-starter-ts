@@ -1,0 +1,35 @@
+@import 'normalize.css';
+
+@font-face {
+  font-family: 'OpenSans-Regular';
+  src: local('OpenSans-Regular'),
+    url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans-Bold';
+  src: local('OpenSans-Bold'),
+    url('../assets/fonts/OpenSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'OpenSans-Italic';
+  src: local('OpenSans-Italic'),
+    url('../assets/fonts/OpenSans-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+:root {
+  /* This defines what 1rem is */
+  /* 1 rem = 10px; 10px/16px = 62.5% */
+  font-size: 62.5%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
