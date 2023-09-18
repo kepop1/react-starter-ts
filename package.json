@@ -4,40 +4,47 @@
   "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "5.14.1",
-    "@testing-library/react": "13.0.0",
-    "@testing-library/user-event": "13.2.1",
-    "@types/jest": "27.0.1",
-    "@types/node": "16.7.13",
-    "@types/react": "18.0.0",
-    "@types/react-dom": "18.0.0",
-    "axios": "0.27.2",
-    "classnames": "2.3.1",
-    "gzipper": "7.1.0",
+    "axios": "1.5.0",
+    "classnames": "2.3.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.33.1",
-    "react-router-dom": "6.3.0",
-    "react-scripts": "5.0.1",
-    "sass": "1.53.0",
-    "source-map-explorer": "2.5.2",
-    "typescript": "4.4.2",
-    "web-vitals": "2.1.0"
+    "react-hook-form": "7.46.1",
+    "react-router-dom": "6.16.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "no-useless-escape": "off"
-    }
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.1.3",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "14.4.3",
+    "@types/node": "20.6.0",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "6.7.0",
+    "@typescript-eslint/parser": "6.7.0",
+    "@vitejs/plugin-react": "4.0.4",
+    "eslint": "8.49.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-import-resolver-typescript": "3.6.0",
+    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-react": "7.33.2",
+    "jsdom": "22.1.0",
+    "prettier": "3.0.3",
+    "sass": "1.66.1",
+    "source-map-explorer": "2.5.3",
+    "typescript": "5.2.2",
+    "vite": "4.4.9",
+    "vite-plugin-checker": "0.6.2",
+    "vite-plugin-svgr": "3.2.0",
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.4",
+    "web-vitals": "3.4.0"
   },
   "browserslist": {
     "production": [
