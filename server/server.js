@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-const express = require('express')
-const cors = require('cors')
-
-const UserRoutes = require('./routes/user')
-const authenticateUser = require('./middlewares/authenticateUser')
+import express from 'express'
+import cors from 'cors'
+import UserRouter from './routes/user.js'
+import { authenticateUser } from './middlewares/authenticateUser.js'
 
 const PORT = process.env.PORT || 4000
 
@@ -15,7 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
-app.use(UserRoutes)
+app.use(UserRouter)
 
 app.use(authenticateUser)
 

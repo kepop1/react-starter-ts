@@ -1,24 +1,35 @@
-@import 'normalize.css';
+@use 'reset.scss';
 
 @font-face {
-  font-family: 'OpenSans-Regular';
-  src: local('OpenSans-Regular'),
-    url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'Poppins-Regular';
+  src:
+    local('Poppins-Regular'),
+    url('../assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
 }
 
 @font-face {
-  font-family: 'OpenSans-Bold';
-  src: local('OpenSans-Bold'),
-    url('../assets/fonts/OpenSans-Bold.ttf') format('truetype');
-  font-weight: bold;
+  font-family: 'Poppins-Medium';
+  src:
+    local('Poppins-Medium'),
+    url('../assets/fonts/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
 }
 
 @font-face {
-  font-family: 'OpenSans-Italic';
-  src: local('OpenSans-Italic'),
-    url('../assets/fonts/OpenSans-Italic.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'Poppins-Bold';
+  src:
+    local('Poppins-Bold'),
+    url('../assets/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Poppins-Italic';
+  src:
+    local('Poppins-Italic'),
+    url('../assets/fonts/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
   font-style: italic;
 }
 
@@ -31,5 +42,4 @@
 body {
   height: 100%;
   width: 100%;
-  margin: 0;
 }

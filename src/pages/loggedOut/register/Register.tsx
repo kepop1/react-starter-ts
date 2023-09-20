@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-
-import { REGISTER_URL, getRequestHeaders } from '../../../api/config'
-import { Button, TextButton, TextInput } from '../../../lib'
-import { ROUTE_LOGIN } from '../../../navigation/constants'
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
+import { REGISTER_URL, getRequestHeaders } from '@/api/config'
+import { Button, TextButton, TextInput } from '@/lib'
+import { ROUTE_LOGIN, ROUTE_FORGOT_PASSWORD } from '@/navigation/constants'
 import styles from './Register.module.scss'
 
 type RegisterFormValues = {
@@ -67,7 +66,8 @@ export const Register = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.header}>Register</h1>
+      <h1>Register</h1>
+      <h2>Enter your details to sign up</h2>
 
       <div className={styles.formContainer}>
         <Controller
@@ -82,7 +82,6 @@ export const Register = () => {
               value={value}
               autoCapitalize="none"
               type="text"
-              autoFocus
             />
           )}
         />
@@ -130,16 +129,25 @@ export const Register = () => {
 
       {!!apiError && <p className={styles.error}>{apiError}</p>}
 
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <Button onClick={handleSubmit(onSubmit)} label="Register" />
-      )}
+      <div className={styles.buttonsContainer}>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <Button onClick={handleSubmit(onSubmit)} label="Register" />
+        )}
 
-      <TextButton
-        onClick={() => navigate(ROUTE_LOGIN)}
-        label="Already have an account? Login!"
-      />
+        <TextButton
+          onClick={() => navigate(ROUTE_LOGIN)}
+          label="Already have an account? Login here"
+          styleOverride={styles.link}
+        />
+
+        <TextButton
+          onClick={() => navigate(ROUTE_FORGOT_PASSWORD)}
+          label="Forgotten your password?"
+          styleOverride={styles.forgotPassword}
+        />
+      </div>
     </div>
   )
 }

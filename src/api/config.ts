@@ -2,6 +2,7 @@ const BASE_URL = 'http://localhost:4000'
 
 export const LOGIN_URL = `${BASE_URL}/login`
 export const REGISTER_URL = `${BASE_URL}/register`
+export const FORGOT_PASSWORD_URL = `${BASE_URL}/forgot-password`
 
 type Headers = {
   Accept: string

@@ -1,10 +1,10 @@
 import {
   createContext,
   useState,
-  SetStateAction,
-  Dispatch,
+  type SetStateAction,
+  type Dispatch,
   useContext,
-  ReactNode,
+  type ReactNode,
 } from 'react'
 
 type AuthStore = {

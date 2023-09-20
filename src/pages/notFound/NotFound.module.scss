@@ -1,25 +1,27 @@
-@use 'src/lib/Font' as font;
-@use 'src/lib/Spacing' as spacing;
-@use 'src/lib/Colors' as colors;
+@use 'src/lib/Font.module' as font;
+@use 'src/lib/Spacing.module' as spacing;
+@use 'src/lib/Colors.module' as colors;
 
 .container {
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
-}
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: colors.$chicago;
 
-.header {
-  display: block;
-  font-family: font.$openSansBold;
-  font-size: font.$navigationHeader;
-  color: black;
-  margin-top: spacing.$xlarge;
-}
+  h1 {
+    font-family: font.$poppinsBold;
+    font-size: font.$heading;
+    color: colors.$pomegranate;
+    margin-bottom: spacing.$medium;
+  }
 
-.body {
-  display: block;
-  font-family: font.$openSansRegular;
-  font-size: font.$body;
-  color: colors.$vividBurgundy;
+  p {
+    font-family: font.$poppinsRegular;
+    font-size: font.$body;
+    color: colors.$alabaster;
+  }
 }

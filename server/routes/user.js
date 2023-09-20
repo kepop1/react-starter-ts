@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const express = require('express')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { v4: uuidv4 } = require('uuid')
-const { addUser, findUserByEmail } = require('../helpers/helpers')
+import express from 'express'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { v4 as uuidv4 } from 'uuid'
+import { addUser, findUserByEmail } from '../helpers/helpers.js'
 
-const router = express.Router()
+const UserRouter = express.Router()
 
 const AUTH_SECRET = process.env.AUTH_SECRET || 'test-secret'
 
-router.post('/register', async (req, res) => {
+UserRouter.post('/register', async (req, res) => {
   // Get the body from the information sent in by the user/client.
   const { firstName, email, password } = req.body
 
@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
   }
 })
 
-router.post('/login', async (req, res) => {
+UserRouter.post('/login', async (req, res) => {
   // Get the body from the information sent in by the user/client.
   const { email, password } = req.body
 
@@ -96,4 +96,4 @@ router.post('/login', async (req, res) => {
   return res.status(200).json({ success: true, token: authToken })
 })
 
-module.exports = router
+export default UserRouter

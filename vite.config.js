@@ -8,7 +8,7 @@ import checker from 'vite-plugin-checker'
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: 3000,
+    port: 3001,
     open: true,
   },
   build: {
@@ -36,6 +36,7 @@ export default defineConfig({
       '**/.{idea,git,cache,output,temp}/**',
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
       '**/legacy/**',
+      '**/server/**',
     ],
   },
 })

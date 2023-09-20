@@ -1,10 +1,11 @@
+import { vi } from 'vitest'
+import { render, fireEvent, screen } from '@/lib/helpers/test-utils'
 import { Button } from './Button'
-import { render, fireEvent, screen } from '../../../helpers/test-utils'
 
 describe('Button component', () => {
   test('Renders correctly and can be pressed', () => {
-    const fakeOnClick = jest.fn()
-    render(<Button onClick={fakeOnClick} label="Test" />)
+    const fakeOnClick = vi.fn()
+    render(<Button onClick={fakeOnClick} label="Test" isLoading={false} />)
 
     const renderedButton = screen.getByText('Test')
 

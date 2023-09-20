@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const fs = require('fs')
-const path = require('path')
-const util = require('util')
+import fs from 'fs'
+import path from 'path'
+import util from 'util'
 
 const readFromFile = util.promisify(fs.readFile)
 const writeToFile = util.promisify(fs.writeFile)
 
 const USERS_FILE_PATH = path.join(process.cwd(), '/db/users.json')
 
-const getUsers = async () => {
+export const getUsers = async () => {
   try {
     const data = await readFromFile(USERS_FILE_PATH)
     const users = JSON.parse(data)
@@ -20,7 +20,7 @@ const getUsers = async () => {
   }
 }
 
-const findUserById = async userId => {
+export const findUserById = async userId => {
   try {
     const users = await getUsers()
     const foundUser = users.find(user => user.id === userId)
@@ -31,7 +31,7 @@ const findUserById = async userId => {
   }
 }
 
-const findUserByEmail = async email => {
+export const findUserByEmail = async email => {
   try {
     const users = await getUsers()
     const foundUser = users.find(user => user.email === email)
@@ -42,7 +42,7 @@ const findUserByEmail = async email => {
   }
 }
 
-const addUser = async newUser => {
+export const addUser = async newUser => {
   try {
     const users = await getUsers()
 
@@ -56,10 +56,4 @@ const addUser = async newUser => {
   } catch (error) {
     return false
   }
-}
-
-module.exports = {
-  findUserById,
-  findUserByEmail,
-  addUser,
 }

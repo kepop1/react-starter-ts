@@ -1,0 +1,25 @@
+/*  Arbitrary font family */
+$poppinsRegular: Poppins-Regular;
+$poppinsMedium: Poppins-Medium;
+$poppinsItalic: Poppins-Italic;
+$poppinsBold: Poppins-Bold;
+
+/* Arbitrary font sizing */
+$heading: 2.4rem;
+$subHeading: 2rem;
+$body: 1.6rem;
+$navigationHeader: 2rem;
+$button: 1.8rem;
+$small: 1.4rem;
+
+:export {
+  poppinsRegular: $poppinsRegular;
+  poppinsItalic: $poppinsItalic;
+  poppinsBold: $poppinsBold;
+  heading: $heading;
+  subHeading: $subHeading;
+  body: $body;
+  navigationHeader: $navigationHeader;
+  button: $button;
+  small: $small;
+}
