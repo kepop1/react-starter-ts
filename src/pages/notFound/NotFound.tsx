@@ -14,8 +14,8 @@ export const NotFound = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.header}>Oops, this page can't be found</h1>
-      <p className={styles.body}>We'll redirect you back to the main page...</p>
+      <h1>Oops, this page can&apos;t be found</h1>
+      <p>We&apos;ll redirect you back to the main page...</p>
     </div>
   )
 }

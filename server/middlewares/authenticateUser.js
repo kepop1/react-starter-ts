@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const jwt = require('jsonwebtoken')
-const { findUserById } = require('../helpers/helpers')
+import jwt from 'jsonwebtoken'
+import { findUserById } from '../helpers/helpers.js'
 
 const AUTH_SECRET = process.env.AUTH_SECRET || 'test-secret'
 
-const authenticateUser = async (req, res, next) => {
+export const authenticateUser = async (req, res, next) => {
   // Get the authorization header from the request, this is using Bearer {token} but it could also be
   // a header on the request such as req.headers.authToken
   const authorizationHeader = req.headers.authorization
@@ -39,5 +39,3 @@ const authenticateUser = async (req, res, next) => {
   // Carry on and allow the user to access the rest of the routes
   next()
 }
-
-module.exports = authenticateUser

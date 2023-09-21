@@ -1,0 +1,23 @@
+@use 'src/lib/Font.module' as font;
+@use 'src/lib/Spacing.module' as spacing;
+@use 'src/lib/Colors.module' as colors;
+
+.container {
+  background-color: colors.$alabaster;
+  margin: spacing.$xlarge;
+  max-width: 80rem;
+  padding: spacing.$xlarge;
+
+  h1 {
+    font-family: font.$poppinsBold;
+    font-size: font.$heading;
+    color: colors.$puertoRico;
+    margin-bottom: spacing.$medium;
+  }
+
+  p {
+    font-family: font.$poppinsRegular;
+    font-size: font.$body;
+    color: black;
+  }
+}

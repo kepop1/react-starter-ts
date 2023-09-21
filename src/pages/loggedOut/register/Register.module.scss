@@ -1,32 +1,60 @@
-@use 'src/lib/Font' as font;
-@use 'src/lib/Spacing' as spacing;
-@use 'src/lib/Colors' as colors;
+@use 'src/lib/Font.module' as font;
+@use 'src/lib/Spacing.module' as spacing;
+@use 'src/lib/Colors.module' as colors;
 
 .container {
   display: flex;
   flex-direction: column;
   flex: 1;
   align-items: center;
-}
+  background-color: colors.$alabaster;
+  min-height: 100vh;
+  min-width: 100vw;
 
-.header {
-  font-family: font.$openSansBold;
-  font-size: font.$heading;
-  text-align: center;
-  margin: calc(spacing.$medium * 3) 0;
+  h1 {
+    font-family: font.$poppinsBold;
+    font-size: font.$heading;
+    text-align: center;
+    margin-top: spacing.$xlarge;
+    margin-bottom: spacing.$medium;
+  }
+
+  h2 {
+    font-family: font.$poppinsMedium;
+    font-size: font.$subHeading;
+    text-align: center;
+  }
 }
 
 .error {
-  font-family: font.$openSansBold;
-  font-size: small;
-  color: colors.$vividBurgundy;
-  padding: spacing.$xsmall;
-  margin: spacing.$xsmall spacing.$xlarge;
+  font-family: font.$poppinsBold;
+  font-size: font.$small;
+  color: colors.$pomegranate;
+  margin: spacing.$small;
+  margin-top: 0.2rem;
 }
 
 .formContainer {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  width: 400px;
+  width: 100%;
+  max-width: 40rem;
+  gap: spacing.$medium;
+  margin: spacing.$xlarge 0;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: spacing.$medium;
+  max-width: 40rem;
+}
+
+.link {
+  color: colors.$puertoRico;
+}
+
+.forgotPassword {
+  color: colors.$burntSienna;
+  font-size: font.$small;
 }

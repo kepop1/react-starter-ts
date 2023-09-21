@@ -1,8 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Main } from '../pages/loggedIn/main/Main'
+import { ScreenModal } from '../pages/loggedIn/screenModal/ScreenModal'
 import { Login } from '../pages/loggedOut/login/Login'
 import { Register } from '../pages/loggedOut/register/Register'
 import { Welcome } from '../pages/loggedOut/welcome/Welcome'
+import { ForgotPassword } from '../pages/loggedOut/forgotPassword/ForgotPassword'
 import { NotFound } from '../pages/notFound/NotFound'
 import { AppLayout } from './AppLayout'
 import { AuthLayout } from './AuthLayout'
@@ -11,24 +13,53 @@ import {
   ROUTE_REGISTER,
   ROUTE_LOGIN,
   ROUTE_MAIN,
+  ROUTE_FORGOT_PASSWORD,
+  ROUTE_SCREEN_MODAL,
 } from './constants'
 
 export const Router = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route path={ROUTE_MAIN} element={<Main />} />
-        </Route>
+  const router = createBrowserRouter([
+    {
+      element: <AppLayout />,
+      children: [
+        {
+          path: ROUTE_MAIN,
+          element: <Main />,
+          children: [
+            {
+              path: ROUTE_SCREEN_MODAL,
+              element: <ScreenModal />,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      element: <AuthLayout />,
+      children: [
+        {
+          path: ROUTE_WELCOME,
+          element: <Welcome />,
+        },
+        {
+          path: ROUTE_LOGIN,
+          element: <Login />,
+        },
+        {
+          path: ROUTE_REGISTER,
+          element: <Register />,
+        },
+        {
+          path: ROUTE_FORGOT_PASSWORD,
+          element: <ForgotPassword />,
+        },
+      ],
+    },
+    {
+      path: '*',
+      element: <NotFound />,
+    },
+  ])
 
-        <Route element={<AuthLayout />}>
-          <Route path={ROUTE_WELCOME} element={<Welcome />} />
-          <Route path={ROUTE_LOGIN} element={<Login />} />
-          <Route path={ROUTE_REGISTER} element={<Register />} />
-        </Route>
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  )
+  return <RouterProvider router={router} />
 }

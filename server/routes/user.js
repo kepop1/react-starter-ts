@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const express = require('express')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { v4: uuidv4 } = require('uuid')
-const { addUser, findUserByEmail } = require('../helpers/helpers')
+import express from 'express'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { v4 as uuidv4 } from 'uuid'
+import { addUser, findUserByEmail, updateUser } from '../helpers/helpers.js'
 
-const router = express.Router()
+const UserRouter = express.Router()
 
 const AUTH_SECRET = process.env.AUTH_SECRET || 'test-secret'
 
-router.post('/register', async (req, res) => {
+UserRouter.post('/register', async (req, res) => {
   // Get the body from the information sent in by the user/client.
   const { firstName, email, password } = req.body
 
@@ -51,11 +51,11 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ success: true, message: `Something has gone wrong!` })
+      .json({ success: false, message: `Something has gone wrong!` })
   }
 })
 
-router.post('/login', async (req, res) => {
+UserRouter.post('/login', async (req, res) => {
   // Get the body from the information sent in by the user/client.
   const { email, password } = req.body
 
@@ -96,4 +96,47 @@ router.post('/login', async (req, res) => {
   return res.status(200).json({ success: true, token: authToken })
 })
 
-module.exports = router
+UserRouter.post('/forgot-password', async (req, res) => {
+  // Get the body from the information sent in by the user/client.
+  const { email } = req.body
+
+  // If it doesn't exist then handle it
+  if (!email)
+    return res.status(400).json({
+      success: false,
+      message: 'Something is wrong with the data you have sent',
+    })
+
+  // If the data exists, find the user
+  const user = await findUserByEmail(email)
+
+  // If the user doesn't exist then handle that
+  if (!user)
+    return res
+      .status(404)
+      .json({ success: false, message: 'This user does not exist' })
+
+  // Auto generate the password hash using bcrypt
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash('password123', saltRounds)
+
+  const userWithResetPassword = { ...user, password: passwordHash }
+
+  try {
+    const successfullyUpdatedUser = await updateUser(userWithResetPassword)
+
+    if (successfullyUpdatedUser) {
+      res
+        .status(201)
+        .json({ success: true, message: `${email}'s password has been reset` })
+    } else {
+      throw new Error('Could not update user')
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Something has gone wrong!` })
+  }
+})
+
+export default UserRouter

@@ -1,0 +1,28 @@
+@use 'src/lib/Font.module' as font;
+@use 'src/lib/Spacing.module' as spacing;
+@use 'src/lib/Colors.module' as colors;
+
+.button {
+  display: flex;
+  width: 100%;
+  font-family: font.$poppinsMedium;
+  font-size: font.$button;
+  color: white;
+  padding: spacing.$xsmall spacing.$medium;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  border-radius: 1rem;
+  background-color: colors.$sandyBrown;
+  min-width: auto;
+  height: 4.5rem;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(110%);
+  }
+
+  &:active {
+    filter: brightness(105%);
+  }
+}

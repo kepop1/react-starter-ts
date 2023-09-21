@@ -1,0 +1,38 @@
+/* Arbitrary colors from a random colour scheme */
+$goldCrayola: #efc69b;
+$vividBurgundy: #af1b3f;
+$cyberGrape: #4b3f72;
+
+// Background colors?
+$alabaster: #f8f8f8;
+$chicago: #575453;
+
+// Lighter / Contrast color
+$puertoRico: #56c3a3;
+
+// Main color
+$sandyBrown: #f1b16c;
+
+// Darker color
+$burntSienna: #e58c4c;
+
+// Success / Warning / Danger
+$chelseaCucumber: #7eb058;
+$treePoppy: #fba020;
+$pomegranate: #f44336;
+
+:export {
+  goldCrayola: $goldCrayola;
+  vividBurgundy: $vividBurgundy;
+  cyberGrape: $cyberGrape;
+
+  alabaster: $alabaster;
+  puertoRico: $puertoRico;
+  sandyBrown: $sandyBrown;
+  burntSienna: $burntSienna;
+  chicago: $chicago;
+
+  chelseaCucumber: $chelseaCucumber;
+  treePoppy: $treePoppy;
+  pomegranate: $pomegranate;
+}

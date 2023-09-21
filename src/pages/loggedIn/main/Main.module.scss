@@ -1,21 +1,25 @@
-@use 'src/lib/Font' as font;
-@use 'src/lib/Spacing' as spacing;
-@use 'src/lib/Colors' as colors;
+@use 'src/lib/Font.module' as font;
+@use 'src/lib/Spacing.module' as spacing;
+@use 'src/lib/Colors.module' as colors;
 
 .container {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  align-content: center;
+  flex: 1;
+  background-color: colors.$chicago;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.content {
   margin: spacing.$xlarge;
   padding: spacing.$medium;
   background-color: colors.$vividBurgundy;
   border-radius: spacing.$medium;
-  box-shadow: 3px black;
 }
 
 .text {
-  font-family: font.$openSansBold;
+  font-family: font.$poppinsBold;
   font-size: font.$subHeading;
   margin-top: spacing.$small;
   text-align: center;
@@ -23,10 +27,37 @@
 }
 
 .italicText {
-  font-family: font.$openSansItalic;
+  font-family: font.$poppinsItalic;
   font-size: font.$subHeading;
   margin-top: spacing.$medium;
   text-align: center;
   color: colors.$goldCrayola;
   word-wrap: break-word;
+}
+
+.buttonsContainer {
+  display: flex;
+  align-self: center;
+  width: 100%;
+  max-width: 60rem;
+  gap: spacing.$large;
+}
+
+.modalContainer {
+  background-color: colors.$alabaster;
+  border-radius: 1.5rem;
+  padding: spacing.$xlarge;
+
+  h1 {
+    font-family: font.$poppinsBold;
+    font-size: font.$heading;
+    color: black;
+    margin-bottom: spacing.$medium;
+  }
+
+  p {
+    font-family: font.$poppinsRegular;
+    font-size: font.$body;
+    color: black;
+  }
 }

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.prettierrc.js
+.eslintrc.js
+env.d.ts
+# The server folder should really have its own eslint file
+server/ 
