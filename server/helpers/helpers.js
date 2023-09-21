@@ -57,3 +57,22 @@ export const addUser = async newUser => {
     return false
   }
 }
+
+export const updateUser = async updatedUser => {
+  try {
+    const users = await getUsers()
+
+    const userIndex = users.findIndex(user => user.id === updatedUser.id)
+
+    users.splice(userIndex, 1, updatedUser)
+
+    const usersString = JSON.stringify(users, null, 2)
+
+    await writeToFile(path.join(USERS_FILE_PATH), usersString)
+
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}

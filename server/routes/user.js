@@ -4,7 +4,7 @@ import express from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { v4 as uuidv4 } from 'uuid'
-import { addUser, findUserByEmail } from '../helpers/helpers.js'
+import { addUser, findUserByEmail, updateUser } from '../helpers/helpers.js'
 
 const UserRouter = express.Router()
 
@@ -51,7 +51,7 @@ UserRouter.post('/register', async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ success: true, message: `Something has gone wrong!` })
+      .json({ success: false, message: `Something has gone wrong!` })
   }
 })
 
@@ -94,6 +94,49 @@ UserRouter.post('/login', async (req, res) => {
 
   // Send back a success with the auth token attached
   return res.status(200).json({ success: true, token: authToken })
+})
+
+UserRouter.post('/forgot-password', async (req, res) => {
+  // Get the body from the information sent in by the user/client.
+  const { email } = req.body
+
+  // If it doesn't exist then handle it
+  if (!email)
+    return res.status(400).json({
+      success: false,
+      message: 'Something is wrong with the data you have sent',
+    })
+
+  // If the data exists, find the user
+  const user = await findUserByEmail(email)
+
+  // If the user doesn't exist then handle that
+  if (!user)
+    return res
+      .status(404)
+      .json({ success: false, message: 'This user does not exist' })
+
+  // Auto generate the password hash using bcrypt
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash('password123', saltRounds)
+
+  const userWithResetPassword = { ...user, password: passwordHash }
+
+  try {
+    const successfullyUpdatedUser = await updateUser(userWithResetPassword)
+
+    if (successfullyUpdatedUser) {
+      res
+        .status(201)
+        .json({ success: true, message: `${email}'s password has been reset` })
+    } else {
+      throw new Error('Could not update user')
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Something has gone wrong!` })
+  }
 })
 
 export default UserRouter
