@@ -1,4 +1,6 @@
-const BASE_URL = 'http://localhost:4000'
+import { getEnvVariable } from '@/lib'
+
+const BASE_URL = getEnvVariable('API_URL')
 
 export const LOGIN_URL = `${BASE_URL}/login`
 export const REGISTER_URL = `${BASE_URL}/register`
