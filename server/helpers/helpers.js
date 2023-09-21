@@ -72,7 +72,6 @@ export const updateUser = async updatedUser => {
 
     return true
   } catch (error) {
-    console.log(error)
     return false
   }
 }

@@ -34,3 +34,30 @@
   color: colors.$goldCrayola;
   word-wrap: break-word;
 }
+
+.buttonsContainer {
+  display: flex;
+  align-self: center;
+  width: 100%;
+  max-width: 60rem;
+  gap: spacing.$large;
+}
+
+.modalContainer {
+  background-color: colors.$alabaster;
+  border-radius: 1.5rem;
+  padding: spacing.$xlarge;
+
+  h1 {
+    font-family: font.$poppinsBold;
+    font-size: font.$heading;
+    color: black;
+    margin-bottom: spacing.$medium;
+  }
+
+  p {
+    font-family: font.$poppinsRegular;
+    font-size: font.$body;
+    color: black;
+  }
+}
