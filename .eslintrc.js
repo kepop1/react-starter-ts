@@ -3,6 +3,7 @@ module.exports = {
     // By extending from a plugin config, we can get recommended rules without having to add them manually.
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     // Helps disable things like react-in-jsx-scope for React 17+
     'plugin:react/jsx-runtime',
     'plugin:import/recommended',

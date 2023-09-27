@@ -42,14 +42,14 @@ UserRouter.post('/register', async (req, res) => {
     const successfullyAddedUser = await addUser(newUser)
 
     if (successfullyAddedUser) {
-      res
+      return res
         .status(201)
         .json({ success: true, message: `${email} has been created` })
     } else {
       throw new Error('Could not add user')
     }
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ success: false, message: `Something has gone wrong!` })
   }
@@ -92,8 +92,14 @@ UserRouter.post('/login', async (req, res) => {
     { expiresIn: '1h' },
   )
 
+  const refreshToken = await jwt.sign(
+    { id: user.id, email: user.email },
+    AUTH_SECRET,
+    { expiresIn: '60 days' },
+  )
+
   // Send back a success with the auth token attached
-  return res.status(200).json({ success: true, token: authToken })
+  return res.status(200).json({ success: true, authToken, refreshToken })
 })
 
 UserRouter.post('/forgot-password', async (req, res) => {
@@ -126,14 +132,14 @@ UserRouter.post('/forgot-password', async (req, res) => {
     const successfullyUpdatedUser = await updateUser(userWithResetPassword)
 
     if (successfullyUpdatedUser) {
-      res
-        .status(201)
+      return res
+        .status(200)
         .json({ success: true, message: `${email}'s password has been reset` })
     } else {
       throw new Error('Could not update user')
     }
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ success: false, message: `Something has gone wrong!` })
   }

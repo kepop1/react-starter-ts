@@ -17,7 +17,7 @@ app.use(UserRouter)
 app.use(authenticateUser)
 
 //Technically a route that will not be reached if you're not authenticated
-app.get('/route', (_, res) => {
+app.get('/authenticated-route', (_, res) => {
   return res.status(200).json({
     success: true,
     message: "You're authenticated well done!",
