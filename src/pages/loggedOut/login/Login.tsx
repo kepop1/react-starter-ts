@@ -6,7 +6,7 @@ import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import { Button, TextButton, TextInput } from '@/lib'
 import { ROUTE_REGISTER, ROUTE_FORGOT_PASSWORD } from '@/navigation/constants'
 import { useAuth } from '@/stores/auth'
-import { LOGIN_URL, getRequestHeaders } from '@/api/config'
+import { LOGIN_URL } from '@/api/config'
 import styles from './Login.module.scss'
 
 type LoginFormValues = {
@@ -17,7 +17,7 @@ type LoginFormValues = {
 export const Login = () => {
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const { setAuthToken } = useAuth()
+  const { setLoggedIn, setUserItemsInLocalStorage } = useAuth()
 
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState('')
@@ -44,20 +44,19 @@ export const Login = () => {
     setLoading(true)
 
     try {
-      const headers = getRequestHeaders()
-
-      const response = await axios.post(
-        LOGIN_URL,
-        {
-          email,
-          password,
-        },
-        { headers: headers },
-      )
+      const response = await axios.post(LOGIN_URL, {
+        email,
+        password,
+      })
 
       if (response.status === 200) {
         // This will trigger te authToken conditional and switch to the AppNavigator.
-        setAuthToken(response.data.token)
+        setLoggedIn(true)
+        setUserItemsInLocalStorage({
+          email,
+          authToken: response.data.authToken,
+          refreshToken: response.data.refreshToken,
+        })
       }
 
       return response

@@ -1,22 +1,24 @@
-import { useAuth } from '@/stores/auth'
+import { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/stores/auth'
 // Example of importing sass variables to be used in js
 import colors from '@/lib/Colors.module.scss'
 import font from '@/lib/Font.module.scss'
 import spacing from '@/lib/Spacing.module.scss'
-import styles from './Main.module.scss'
-import { Button, Modal } from '@/lib'
+import { Button, LocalStorageKeys, Modal } from '@/lib'
 import { ROUTE_SCREEN_MODAL } from '@/navigation/constants'
-import { useState } from 'react'
+import styles from './Main.module.scss'
 
 export const Main = () => {
-  const { authToken } = useAuth()
   const navigate = useNavigate()
+  const { resetAuthStore } = useAuth()
   // We can make use of the location here to determine how to render the screen modal depending on if there's content behind it or not.
   // See more here: https://github.com/remix-run/react-router/discussions/9864#discussioncomment-6350903
   const location = useLocation()
 
   const [showModal, setShowModal] = useState(false)
+
+  const authToken = localStorage.getItem(LocalStorageKeys.authToken)
 
   // Example of using JS overrides in styling ... you wouldn't do this normally
   return (
@@ -51,6 +53,14 @@ export const Main = () => {
               navigate(ROUTE_SCREEN_MODAL, { state: location })
             }
             label="Go to Screen Modal"
+            styleOverride={styles.screenModal}
+          />
+        </div>
+
+        <div className={styles.buttonsContainer}>
+          <Button
+            onClick={() => resetAuthStore()}
+            label="Remove auth and reload"
             styleOverride={styles.screenModal}
           />
         </div>

@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import { Button, TextButton, TextInput } from '@/lib'
 import { ROUTE_LOGIN } from '@/navigation/constants'
-import { FORGOT_PASSWORD_URL, getRequestHeaders } from '@/api/config'
+import { FORGOT_PASSWORD_URL } from '@/api/config'
 import styles from './ForgotPassword.module.scss'
 
 type ForgotPasswordValues = {
@@ -38,15 +38,9 @@ export const ForgotPassword = () => {
     setLoading(true)
 
     try {
-      const headers = getRequestHeaders()
-
-      const response = await axios.post(
-        FORGOT_PASSWORD_URL,
-        {
-          email,
-        },
-        { headers: headers },
-      )
+      const response = await axios.post(FORGOT_PASSWORD_URL, {
+        email,
+      })
 
       if (response.data.success) {
         navigate(`${ROUTE_LOGIN}?email=${email}`)

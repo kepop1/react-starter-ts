@@ -3,9 +3,13 @@ import { useAuth } from '../stores/auth'
 import { ROUTE_WELCOME } from './constants'
 
 export const AppLayout = () => {
-  const { authToken } = useAuth()
+  const { loggedIn } = useAuth()
 
-  if (!authToken) {
+  if (loggedIn === null) {
+    return <div>Loading Auth ...</div>
+  }
+
+  if (!loggedIn) {
     return <Navigate to={ROUTE_WELCOME} />
   }
 
