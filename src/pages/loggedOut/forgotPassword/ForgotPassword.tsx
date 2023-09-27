@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import { Button, TextButton, TextInput } from '@/lib'
 import { ROUTE_LOGIN } from '@/navigation/constants'
-import { useAuth } from '@/stores/auth'
 import { FORGOT_PASSWORD_URL, getRequestHeaders } from '@/api/config'
 import styles from './ForgotPassword.module.scss'
 
@@ -16,7 +15,6 @@ type ForgotPasswordValues = {
 export const ForgotPassword = () => {
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const { setAuthToken } = useAuth()
 
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState('')
@@ -50,9 +48,8 @@ export const ForgotPassword = () => {
         { headers: headers },
       )
 
-      if (response.status === 200) {
-        // This will trigger te authToken conditional and switch to the AppNavigator.
-        setAuthToken(response.data.token)
+      if (response.data.success) {
+        navigate(`${ROUTE_LOGIN}?email=${email}`)
       }
 
       return response
