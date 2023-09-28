@@ -3,9 +3,13 @@ import { useAuth } from '../stores/auth'
 import { ROUTE_MAIN } from './constants'
 
 export const AuthLayout = () => {
-  const { authToken } = useAuth()
+  const { loggedIn } = useAuth()
 
-  if (authToken) {
+  if (loggedIn === null) {
+    return <div>Loading Auth ...</div>
+  }
+
+  if (loggedIn) {
     return <Navigate to={ROUTE_MAIN} />
   }
 

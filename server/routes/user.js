@@ -145,4 +145,34 @@ UserRouter.post('/forgot-password', async (req, res) => {
   }
 })
 
+UserRouter.post('/authenticate', async (req, res) => {
+  // Get the body from the information sent in by the user/client.
+  const { refreshToken } = req.body
+
+  // If it doesn't exist then handle it
+  if (!refreshToken)
+    return res.status(400).json({
+      success: false,
+      message: 'Something is wrong with the data you have sent',
+    })
+
+  try {
+    const { id, email } = await jwt.verify(refreshToken, AUTH_SECRET)
+
+    // If the password is correct, and the user has been found, then create an authentication token
+    const authToken = await jwt.sign({ id, email }, AUTH_SECRET, {
+      expiresIn: '1h',
+    })
+
+    // Send back a success with the auth token attached
+    return res.status(200).json({ success: true, authToken })
+  } catch (error) {
+    console.log(error)
+
+    return res
+      .status(500)
+      .json({ success: false, message: `Something has gone wrong!` })
+  }
+})
+
 export default UserRouter

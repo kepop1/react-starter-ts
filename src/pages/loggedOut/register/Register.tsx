@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
-import { REGISTER_URL, getRequestHeaders } from '@/api/config'
+import { REGISTER_URL } from '@/api/config'
 import { Button, TextButton, TextInput } from '@/lib'
 import { ROUTE_LOGIN, ROUTE_FORGOT_PASSWORD } from '@/navigation/constants'
 import styles from './Register.module.scss'
@@ -40,17 +40,11 @@ export const Register = () => {
     setLoading(true)
 
     try {
-      const headers = getRequestHeaders()
-
-      const response = await axios.post(
-        REGISTER_URL,
-        {
-          firstName,
-          email,
-          password,
-        },
-        { headers: headers },
-      )
+      const response = await axios.post(REGISTER_URL, {
+        firstName,
+        email,
+        password,
+      })
 
       if (response.status === 201) {
         navigate(`${ROUTE_LOGIN}?email=${email}`)
