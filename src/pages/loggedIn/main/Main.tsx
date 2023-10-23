@@ -1,22 +1,23 @@
-import { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/stores/auth'
+import { LocalStorageKeys } from '@/lib'
+import { Button, Modal } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { ROUTE_SCREEN_MODAL } from '@/navigation/constants'
 // Example of importing sass variables to be used in js
 import colors from '@/lib/Colors.module.scss'
 import font from '@/lib/Font.module.scss'
 import spacing from '@/lib/Spacing.module.scss'
-import { Button, LocalStorageKeys, Modal } from '@/lib'
-import { ROUTE_SCREEN_MODAL } from '@/navigation/constants'
 import styles from './Main.module.scss'
 
 export const Main = () => {
+  const [opened, { open, close }] = useDisclosure(false)
+
   const navigate = useNavigate()
   const { resetAuthStore } = useAuth()
   // We can make use of the location here to determine how to render the screen modal depending on if there's content behind it or not.
   // See more here: https://github.com/remix-run/react-router/discussions/9864#discussioncomment-6350903
   const location = useLocation()
-
-  const [showModal, setShowModal] = useState(false)
 
   const authToken = localStorage.getItem(LocalStorageKeys.authToken)
 
@@ -41,39 +42,39 @@ export const Main = () => {
         </div>
 
         <div className={styles.buttonsContainer}>
-          <Button
-            onClick={() => setShowModal(true)}
-            label="Open Regular Modal"
-            styleOverride={styles.regularModal}
-          />
+          <Button onClick={open} variant="filled" size="lg" radius="md">
+            Open Regular Modal
+          </Button>
 
           <Button
             onClick={() =>
               // How we pass parameters to routes - more specifically the location / navigation state.
               navigate(ROUTE_SCREEN_MODAL, { state: location })
             }
-            label="Go to Screen Modal"
-            styleOverride={styles.screenModal}
-          />
+            variant="filled"
+            size="lg"
+            radius="md">
+            Go to Screen Modal
+          </Button>
         </div>
 
         <div className={styles.buttonsContainer}>
           <Button
             onClick={() => resetAuthStore()}
-            label="Remove auth and reload"
-            styleOverride={styles.screenModal}
-          />
+            variant="filled"
+            size="lg"
+            radius="md">
+            Remove auth and reload
+          </Button>
         </div>
       </div>
 
-      {showModal && (
-        <Modal onCancel={() => setShowModal(false)}>
-          <div className={styles.modalContainer}>
-            <h1>This is a normal modal</h1>
-            <p>I hope it is everything you want</p>
-          </div>
-        </Modal>
-      )}
+      <Modal opened={opened} onClose={close} centered>
+        <div className={styles.modalContainer}>
+          <h1>This is a normal modal</h1>
+          <p>I hope it is everything you want</p>
+        </div>
+      </Modal>
 
       {/* Allows for the nested screen modals */}
       <Outlet />

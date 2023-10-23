@@ -1,17 +1,23 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
+import { useForm, zodResolver } from '@mantine/form'
+import { Button, PasswordInput, Text, TextInput, Title } from '@mantine/core'
 import { REGISTER_URL } from '@/api/config'
-import { Button, TextButton, TextInput } from '@/lib'
 import { ROUTE_LOGIN, ROUTE_FORGOT_PASSWORD } from '@/navigation/constants'
+import colors from '@/lib/Colors.module.scss'
 import styles from './Register.module.scss'
 
-type RegisterFormValues = {
-  firstName: string
-  email: string
-  password: string
-}
+const registerFormSchema = z.object({
+  firstName: z.string().min(2, { message: 'You must have initials at least' }),
+  email: z.string().email({ message: 'Invalid email' }),
+  password: z
+    .string()
+    .min(6, { message: 'Password must be at least 6 letters long' }),
+})
+
+type RegisterFormValues = z.infer<typeof registerFormSchema>
 
 const initialValues = {
   firstName: '',
@@ -24,19 +30,12 @@ export const Register = () => {
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState('')
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormValues>({
-    defaultValues: initialValues,
+  const form = useForm<RegisterFormValues>({
+    initialValues,
+    validate: zodResolver(registerFormSchema),
   })
 
-  const onSubmit: SubmitHandler<RegisterFormValues> = async ({
-    firstName,
-    email,
-    password,
-  }) => {
+  const onSubmit = form.onSubmit(async ({ firstName, email, password }) => {
     setLoading(true)
 
     try {
@@ -56,91 +55,61 @@ export const Register = () => {
     } finally {
       setLoading(false)
     }
-  }
+  })
 
   return (
     <div className={styles.container}>
-      <h1>Register</h1>
-      <h2>Enter your details to sign up</h2>
+      <Title order={1}>Register</Title>
+      <Title order={4}>Enter your details to sign up</Title>
 
-      <div className={styles.formContainer}>
-        <Controller
-          name="firstName"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="First name"
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              autoCapitalize="none"
-              type="text"
-            />
-          )}
+      <form onSubmit={onSubmit} className={styles.formContainer}>
+        <TextInput
+          label="First name"
+          placeholder="First name"
+          autoCapitalize="none"
+          {...form.getInputProps('firstName')}
         />
-        {!!errors.firstName && (
-          <p className={styles.error}>This is required.</p>
+
+        <TextInput
+          label="Email"
+          placeholder="Email"
+          autoCapitalize="none"
+          type="email"
+          {...form.getInputProps('email')}
+        />
+
+        <PasswordInput
+          label="Password"
+          placeholder="not-password-123"
+          {...form.getInputProps('password')}
+        />
+
+        {!!apiError && <p className={styles.error}>{apiError}</p>}
+
+        {loading ? (
+          <Text size="md">Loading ...</Text>
+        ) : (
+          <Button type="submit" variant="filled" size="lg" radius="md">
+            Register
+          </Button>
         )}
-
-        <Controller
-          name="email"
-          control={control}
-          rules={{
-            required: true,
-            validate: value => /.+\@.+\..+/.test(value),
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Email"
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              autoCapitalize="none"
-              type="email"
-            />
-          )}
-        />
-        {!!errors.email && <p className={styles.error}>This is required.</p>}
-
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Password"
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              autoCapitalize="none"
-              type="password"
-            />
-          )}
-        />
-        {!!errors.password && <p className={styles.error}>This is required.</p>}
-      </div>
-
-      {!!apiError && <p className={styles.error}>{apiError}</p>}
+      </form>
 
       <div className={styles.buttonsContainer}>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <Button onClick={handleSubmit(onSubmit)} label="Register" />
-        )}
+        <Button
+          variant="transparent"
+          size="lg"
+          color={colors.puertoRico}
+          onClick={() => navigate(ROUTE_LOGIN)}>
+          Already have an account? Login here
+        </Button>
 
-        <TextButton
-          onClick={() => navigate(ROUTE_LOGIN)}
-          label="Already have an account? Login here"
-          styleOverride={styles.link}
-        />
-
-        <TextButton
-          onClick={() => navigate(ROUTE_FORGOT_PASSWORD)}
-          label="Forgotten your password?"
-          styleOverride={styles.forgotPassword}
-        />
+        <Button
+          variant="transparent"
+          size="lg"
+          onClick={() => navigate(ROUTE_FORGOT_PASSWORD)}>
+          Forgotten your password?
+        </Button>
       </div>
     </div>
   )

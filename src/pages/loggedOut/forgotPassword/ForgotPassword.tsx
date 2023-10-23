@@ -2,15 +2,19 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
-import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
-import { Button, TextButton, TextInput } from '@/lib'
+import { z } from 'zod'
+import { Button, Text, TextInput, Title } from '@mantine/core'
+import { useForm, zodResolver } from '@mantine/form'
 import { ROUTE_LOGIN } from '@/navigation/constants'
 import { FORGOT_PASSWORD_URL } from '@/api/config'
+import colors from '@/lib/Colors.module.scss'
 import styles from './ForgotPassword.module.scss'
 
-type ForgotPasswordValues = {
-  email: string
-}
+const forgotPasswordSchema = z.object({
+  email: z.string().email({ message: 'Invalid email' }),
+})
+
+type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>
 
 export const ForgotPassword = () => {
   const navigate = useNavigate()
@@ -23,18 +27,14 @@ export const ForgotPassword = () => {
 
   const initialValues = {
     email: registeredEmail || '',
-    password: '',
   }
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordValues>({
-    defaultValues: initialValues,
+  const form = useForm<ForgotPasswordValues>({
+    initialValues,
+    validate: zodResolver(forgotPasswordSchema),
   })
 
-  const onSubmit: SubmitHandler<ForgotPasswordValues> = async ({ email }) => {
+  const onSubmit = form.onSubmit(async ({ email }) => {
     setLoading(true)
 
     try {
@@ -52,52 +52,43 @@ export const ForgotPassword = () => {
     } finally {
       setLoading(false)
     }
-  }
+  })
 
   return (
     <div className={styles.container}>
-      <h1>Forgot Password</h1>
-      <h2>
+      <Title order={1}>Forgot Password</Title>
+      <Title order={4}>
         Enter your email to get your password reset, hint it will be:
         password123
-      </h2>
+      </Title>
 
-      <div className={styles.formContainer}>
-        <Controller
-          name="email"
-          control={control}
-          rules={{
-            required: true,
-            validate: value => /.+\@.+\..+/.test(value),
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Email"
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              autoCapitalize="none"
-              type="email"
-            />
-          )}
+      <form onSubmit={onSubmit} className={styles.formContainer}>
+        <TextInput
+          placeholder="Email"
+          autoCapitalize="none"
+          type="email"
+          {...form.getInputProps('email')}
         />
-        {!!errors.email && <p className={styles.error}>This is required.</p>}
-      </div>
+
+        {loading ? (
+          <Text size="md">Loading ...</Text>
+        ) : (
+          <Button type="submit" variant="filled" size="lg" radius="md">
+            Submit Email
+          </Button>
+        )}
+      </form>
 
       {!!apiError && <p className={styles.error}>{apiError}</p>}
 
       <div className={styles.buttonsContainer}>
-        {loading ? (
-          <div>Loading ...</div>
-        ) : (
-          <Button onClick={handleSubmit(onSubmit)} label="Submit email" />
-        )}
-
-        <TextButton
-          onClick={() => navigate(ROUTE_LOGIN)}
-          label="All sorted? Sign in here"
-          styleOverride={styles.link}
-        />
+        <Button
+          variant="transparent"
+          size="lg"
+          color={colors.puertoRico}
+          onClick={() => navigate(ROUTE_LOGIN)}>
+          All sorted? Sign in here
+        </Button>
       </div>
     </div>
   )
