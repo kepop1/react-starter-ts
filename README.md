@@ -14,6 +14,8 @@ To be honest it exists to fill that gap when you want to start a new side projec
 
 Like the React Native starter kit (see [here](https://github.com/kepop1/react-native-starter-ts)) with this being a React Web App there's no extra boilerplate other than having npm/yarn installed. It's built on top of Vite & React(see [here](https://vitejs.dev/guide/))
 
+> If you want something more, I've put up some pull requests with changes in that build some extra functionality e.g. auto login in. See: https://github.com/kepop1/react-starter-ts/pulls
+
 ## Outline
 
 This starter will setup you up with a project has:
