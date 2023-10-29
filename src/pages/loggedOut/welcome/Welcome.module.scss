@@ -12,25 +12,14 @@
   min-width: 100vw;
 
   h1 {
-    font-family: font.$poppinsBold;
-    font-size: font.$heading;
-    text-align: center;
     margin: spacing.$xlarge 0;
   }
 
   p {
-    font-family: font.$poppinsRegular;
-    font-size: font.$body;
     margin-bottom: spacing.$xlarge;
-    text-align: center;
-    line-height: 2.2rem;
   }
 }
 
 .content {
   max-width: 40rem;
-}
-
-.button {
-  max-width: 20rem;
 }

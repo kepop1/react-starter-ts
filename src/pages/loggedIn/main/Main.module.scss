@@ -39,9 +39,10 @@
   display: flex;
   align-self: center;
   width: 100%;
-  max-width: 60rem;
+  flex-wrap: wrap;
   gap: spacing.$large;
   margin-top: spacing.$medium;
+  justify-content: center;
 }
 
 .modalContainer {

@@ -2,17 +2,23 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
-import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
-import { Button, TextButton, TextInput } from '@/lib'
+import { z } from 'zod'
+import { useForm, zodResolver } from '@mantine/form'
+import { Button, PasswordInput, Text, TextInput, Title } from '@mantine/core'
 import { ROUTE_REGISTER, ROUTE_FORGOT_PASSWORD } from '@/navigation/constants'
 import { useAuth } from '@/stores/auth'
 import { LOGIN_URL } from '@/api/config'
+import colors from '@/lib/Colors.module.scss'
 import styles from './Login.module.scss'
 
-type LoginFormValues = {
-  email: string
-  password: string
-}
+const loginFormSchema = z.object({
+  email: z.string().email({ message: 'Invalid email' }),
+  password: z
+    .string()
+    .min(6, { message: 'Password must be at least 6 letters long' }),
+})
+
+type LoginFormValues = z.infer<typeof loginFormSchema>
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -29,18 +35,12 @@ export const Login = () => {
     password: '',
   }
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    defaultValues: initialValues,
+  const form = useForm<LoginFormValues>({
+    initialValues,
+    validate: zodResolver(loginFormSchema),
   })
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async ({
-    email,
-    password,
-  }) => {
+  const onSubmit = form.onSubmit(async ({ email, password }) => {
     setLoading(true)
 
     try {
@@ -65,72 +65,53 @@ export const Login = () => {
     } finally {
       setLoading(false)
     }
-  }
+  })
 
   return (
     <div className={styles.container}>
-      <h1>Login</h1>
-      <h2>Enter your details to sign in</h2>
+      <Title order={1}>Login</Title>
+      <Title order={4}>Enter your details to sign in</Title>
 
-      <div className={styles.formContainer}>
-        <Controller
-          name="email"
-          control={control}
-          rules={{
-            required: true,
-            validate: value => /.+\@.+\..+/.test(value),
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Email"
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              autoCapitalize="none"
-              type="email"
-            />
-          )}
+      <form onSubmit={onSubmit} className={styles.formContainer}>
+        <TextInput
+          label="Email"
+          placeholder="hello@findadesk.com"
+          type="email"
+          {...form.getInputProps('email')}
         />
-        {!!errors.email && <p className={styles.error}>This is required.</p>}
 
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Password"
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              autoCapitalize="none"
-              type="password"
-            />
-          )}
+        <PasswordInput
+          label="Password"
+          placeholder="not-password-123"
+          {...form.getInputProps('password')}
         />
-        {!!errors.password && <p className={styles.error}>This is required.</p>}
-      </div>
 
-      {!!apiError && <p className={styles.error}>{apiError}</p>}
+        {!!apiError && <p className={styles.error}>{apiError}</p>}
+
+        {loading ? (
+          <Text size="md">Loading ...</Text>
+        ) : (
+          <Button type="submit" variant="filled" size="lg" radius="md">
+            Login
+          </Button>
+        )}
+      </form>
 
       <div className={styles.buttonsContainer}>
-        {loading ? (
-          <div>Loading ...</div>
-        ) : (
-          <Button onClick={handleSubmit(onSubmit)} label="Login" />
-        )}
+        <Button
+          variant="transparent"
+          size="lg"
+          color={colors.puertoRico}
+          onClick={() => navigate(ROUTE_REGISTER)}>
+          No account? Register here
+        </Button>
 
-        <TextButton
-          onClick={() => navigate(ROUTE_REGISTER)}
-          label="No account? Register here"
-          styleOverride={styles.link}
-        />
-
-        <TextButton
-          onClick={() => navigate(ROUTE_FORGOT_PASSWORD)}
-          label="Forgotten your password?"
-          styleOverride={styles.forgotPassword}
-        />
+        <Button
+          variant="transparent"
+          size="lg"
+          onClick={() => navigate(ROUTE_FORGOT_PASSWORD)}>
+          Forgotten your password?
+        </Button>
       </div>
     </div>
   )
